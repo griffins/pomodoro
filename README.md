@@ -1,60 +1,42 @@
-# POMODORO TIMER
-### bc-11-pomodoro
+# Project
 
-##pomodoro timer??
+A detailed description of this project.
 
-Well if you google pomodoro you will come across tomatoes so whoever called it pomodoro missed out on a chance to call it Tomato timer
-Podomoro timer allows you to schedule your tasks and break. It divides tasks to cycles, short breaks and long breaks.
-Cycles by default are of 25 minutes, Short breaks 5 minutes (come after every cycle), Long breaks 15 minutes (come after 4 cycle). 
-All times can be edited
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [API Reference](#api-reference)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
-To run the app install and initialize virtual environment.
-
-	clone repository
-	`git clone https://github.com/sirjmkitavi/bc-11-pomodoro`
-
-	cd into the directory
-	`cd bc-11-pomodoro`
-
-	Run pip install to install requirements
-	`pip install -r requirements.txt`
-
-Uses cvlc - command line vlc (comes with vlc player) to run play the alrm tones and pygame to display countdown timer
+```bash
+# TODO: Add install steps
+```
 
 ## Usage
 
-Run Pomodoro timer `python pomodoro.py -i`
-commands include:
+```bash
+# TODO: Add usage examples
+```
 
-     pomodoro start <task-title> to create new task for the timer 
-     `pomodoro start presentations` 
-     
-     pomodoro config short_break to modify the short break time 
-     `pomodoro config short_break`
+## Configuration
 
-     pomodoro config long_break to modify the break time
-     `pomodoro config long_break`
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `EXAMPLE` | Example variable | `none` |
 
-     pomodoro config sound to modify sound settings
-     `pomodoro config sound`
+## API Reference
 
-     pomodoro list <date> to list tasks of certain day
-     `pomodoro list 2016:11:09`
+See [docs/api.md](docs/api.md).
 
-     pomodoro list_all to list all tasks in database
-     `pomodoro list_all`
+## Contributing
 
-     pomodoro delete_all to delete all tasks in database
-     `pomodoro delete_all`
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## License
 
-### To do List
-
-	Working on `pomodoro stop`
-     and `pomodoro run` to run currently configured apps from database
-
-### Issues
-
-Python Module `pygame` has support issues in latest MACs, still working on how to solve that. Suggestions are welcome.
+MIT
