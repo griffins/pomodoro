@@ -18,8 +18,8 @@ To run the app install and initialize virtual environment.
 	cd into the directory
 	`cd bc-11-pomodoro`
 
-	Run pip install to install requirements
-	`pip install -r requirements.txt`
+	Run uv add to install requirements
+	`uv sync
 
 Uses cvlc - command line vlc (comes with vlc player) to run play the alrm tones and pygame to display countdown timer
 
