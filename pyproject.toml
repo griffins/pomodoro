@@ -1,0 +1,12 @@
+[project]
+name = "workspace"
+version = "0.1.0"
+description = "Well if you google pomodoro you will come across tomatoes so whoever called it pomodoro missed out on a chance to call it Tomato timer"
+requires-python = ">=3.11"
+dependencies = [
+    "docopt>=0.6.2",
+    "prettytable>=0.7.2",
+    "pyfiglet>=0.7.5",
+    "pygame>=2.6.1",
+    "termcolor>=1.1.0",
+]
