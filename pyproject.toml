@@ -1,0 +1,13 @@
+[project]
+name = "pomodoro-timer"
+description = "A timer that schedules tasks into cycles with breaks, based on the Pomodoro Technique."
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "docopt-ng>=0.9.0",
+    "prettytable>=0.7.2",
+    "pyfiglet>=0.7.5",
+    "pygame>=2.6.1",
+    "pytest>=7.0",
+    "termcolor>=1.1.0",
+]

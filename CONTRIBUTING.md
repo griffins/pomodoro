@@ -67,7 +67,7 @@ Clone the repository and install the required dependencies by running:
 ```bash
 git clone https://github.com/yourusername/pomodoro-timer.git
 cd pomodoro-timer
-pip install -r requirements.txt
+uv sync
 ```
 
 ### Database Setup

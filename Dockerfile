@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+# Install uv for fast Python package management
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
 # Prevent .pyc files and enable unbuffered output for real-time logs
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -23,7 +26,8 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy requirements first to leverage Docker layer caching
-COPY requirements.txt .
+COPY pyproject.toml uv.lock ./
+COPY .python-version* ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source files
