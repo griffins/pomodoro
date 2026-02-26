@@ -1,36 +1,19 @@
-"""Tests for the Pomodoro Timer application.
-
-Note: The source modules use Python 2 syntax (raw_input, print statements)
-and cannot be imported directly in Python 3. These tests validate the
-underlying business logic and database operations by replicating the
-core algorithms.
-"""
+"""Tests for the Pomodoro Timer application."""
 
 import pytest
 import sqlite3
 import datetime
 import time as time_mod
+from unittest.mock import patch, MagicMock
+
+import countdown_timer
+from new_task import cycle
+from config import set_time, short_break_settings, long_break_settings, sound_settings, task_length_settings
 
 
 # ---------------------------------------------------------------------------
-# Helper: replicate core functions from the source modules
+# Helper: validation functions extracted from config logic
 # ---------------------------------------------------------------------------
-
-def time_in_sec(time_str):
-    """Replicates countdown_timer.time_in_sec logic."""
-    total_time = time_str.split(':')
-    for i in [0, 1, 2]:
-        total_time[i] = int(total_time[i])
-    return total_time[2] + (total_time[1] * 60) + (total_time[0] * 60 * 60)
-
-
-def cycle(tasks_length, tasks_time):
-    """Replicates new_task.cycle logic."""
-    if time_in_sec(tasks_length) < time_in_sec(tasks_time):
-        return 1
-    else:
-        return time_in_sec(tasks_length) // time_in_sec(tasks_time)
-
 
 def validate_time_format(time_str):
     """Replicates the time validation logic used in config functions."""
@@ -89,60 +72,60 @@ def insert_task(conn, task_name, time_stamp, cycle_time, cycles, shortb, longb, 
 
 
 # ===========================================================================
-# Tests: time_in_sec (countdown_timer.py)
+# Tests: time_in_sec (countdown_timer.py) — imported directly
 # ===========================================================================
 
 class TestTimeInSec:
 
     def test_one_hour(self):
-        assert time_in_sec("01:00:00") == 3600
+        assert countdown_timer.time_in_sec("01:00:00") == 3600
 
     def test_one_minute(self):
-        assert time_in_sec("00:01:00") == 60
+        assert countdown_timer.time_in_sec("00:01:00") == 60
 
     def test_one_second(self):
-        assert time_in_sec("00:00:01") == 1
+        assert countdown_timer.time_in_sec("00:00:01") == 1
 
     def test_zero(self):
-        assert time_in_sec("00:00:00") == 0
+        assert countdown_timer.time_in_sec("00:00:00") == 0
 
     def test_default_cycle_time(self):
-        assert time_in_sec("00:25:00") == 1500
+        assert countdown_timer.time_in_sec("00:25:00") == 1500
 
     def test_default_short_break(self):
-        assert time_in_sec("00:05:00") == 300
+        assert countdown_timer.time_in_sec("00:05:00") == 300
 
     def test_default_long_break(self):
-        assert time_in_sec("00:15:00") == 900
+        assert countdown_timer.time_in_sec("00:15:00") == 900
 
     def test_complex_time(self):
         # 1*3600 + 30*60 + 45 = 5445
-        assert time_in_sec("01:30:45") == 5445
+        assert countdown_timer.time_in_sec("01:30:45") == 5445
 
     def test_large_hours(self):
-        assert time_in_sec("10:00:00") == 36000
+        assert countdown_timer.time_in_sec("10:00:00") == 36000
 
-    def test_invalid_format_raises(self):
-        with pytest.raises((ValueError, IndexError)):
-            time_in_sec("invalid")
+    def test_invalid_format_exits(self):
+        with pytest.raises(SystemExit):
+            countdown_timer.time_in_sec("invalid")
 
-    def test_missing_field_raises(self):
-        with pytest.raises((ValueError, IndexError)):
-            time_in_sec("00:00")
+    def test_missing_field_exits(self):
+        with pytest.raises(SystemExit):
+            countdown_timer.time_in_sec("00:00")
 
-    def test_empty_string_raises(self):
-        with pytest.raises((ValueError, IndexError)):
-            time_in_sec("")
+    def test_empty_string_exits(self):
+        with pytest.raises(SystemExit):
+            countdown_timer.time_in_sec("")
 
 
 # ===========================================================================
-# Tests: cycle calculation (new_task.py)
+# Tests: cycle calculation (new_task.py) — imported directly
 # ===========================================================================
 
 class TestCycle:
 
     def test_task_shorter_than_cycle(self):
-        # task length < cycle time → 1 cycle
+        # task length < cycle time -> 1 cycle
         assert cycle("00:10:00", "00:25:00") == 1
 
     def test_exact_division(self):
@@ -171,6 +154,73 @@ class TestCycle:
     def test_single_second_cycles(self):
         # 10 seconds / 2 seconds = 5
         assert cycle("00:00:10", "00:00:02") == 5
+
+
+# ===========================================================================
+# Tests: config functions (config.py) — imported directly, input mocked
+# ===========================================================================
+
+class TestConfigSetTime:
+
+    @patch('builtins.input', return_value='')
+    def test_default_cycle_time(self, mock_input):
+        assert set_time() == "00:25:00"
+
+    @patch('builtins.input', return_value='00:30:00')
+    def test_custom_cycle_time(self, mock_input):
+        assert set_time() == "00:30:00"
+
+    @patch('builtins.input', return_value='01:00:00')
+    def test_one_hour_cycle(self, mock_input):
+        assert set_time() == "01:00:00"
+
+
+class TestConfigShortBreak:
+
+    @patch('builtins.input', return_value='')
+    def test_default_short_break(self, mock_input):
+        assert short_break_settings() == "00:05:00"
+
+    @patch('builtins.input', return_value='00:10:00')
+    def test_custom_short_break(self, mock_input):
+        assert short_break_settings() == "00:10:00"
+
+
+class TestConfigLongBreak:
+
+    @patch('builtins.input', return_value='')
+    def test_default_long_break(self, mock_input):
+        assert long_break_settings() == "00:15:00"
+
+    @patch('builtins.input', return_value='00:20:00')
+    def test_custom_long_break(self, mock_input):
+        assert long_break_settings() == "00:20:00"
+
+
+class TestConfigSound:
+
+    @patch('builtins.input', return_value='')
+    def test_default_sound_on(self, mock_input):
+        assert sound_settings() is True
+
+    @patch('builtins.input', return_value='1')
+    def test_sound_on(self, mock_input):
+        assert sound_settings() is True
+
+    @patch('builtins.input', return_value='0')
+    def test_sound_off(self, mock_input):
+        assert sound_settings() is False
+
+
+class TestConfigTaskLength:
+
+    @patch('builtins.input', return_value='')
+    def test_default_task_length(self, mock_input):
+        assert task_length_settings() == "01:00:00"
+
+    @patch('builtins.input', return_value='02:00:00')
+    def test_custom_task_length(self, mock_input):
+        assert task_length_settings() == "02:00:00"
 
 
 # ===========================================================================
@@ -341,7 +391,7 @@ class TestUpdateOperations:
 
 
 # ===========================================================================
-# Tests: config validation (config.py)
+# Tests: config validation logic
 # ===========================================================================
 
 class TestConfigTimeValidation:
@@ -443,3 +493,28 @@ class TestTimestamp:
         c = db.cursor()
         c.execute("SELECT * FROM Pomodoro WHERE timestamp = ?", (ts,))
         assert len(c.fetchall()) == 1
+
+
+# ===========================================================================
+# Tests: tone functions (tone.py)
+# ===========================================================================
+
+class TestTone:
+
+    @patch('subprocess.Popen')
+    def test_tone1_calls_vlc_with_end_alarm(self, mock_popen):
+        import tone
+        tone.tone1()
+        mock_popen.assert_called_once()
+        args = mock_popen.call_args[0][0]
+        assert "cvlc" in args
+        assert "end-alarm-tone.mp3" in args
+
+    @patch('subprocess.Popen')
+    def test_tone2_calls_vlc_with_start_alarm(self, mock_popen):
+        import tone
+        tone.tone2()
+        mock_popen.assert_called_once()
+        args = mock_popen.call_args[0][0]
+        assert "cvlc" in args
+        assert "start-alarm-tone.mp3" in args

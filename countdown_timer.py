@@ -1,7 +1,7 @@
-# #!/usr/bin/env python
 import pygame
 import os
 from termcolor import colored
+
 
 # func to convert time to seconds
 def time_in_sec(time):
@@ -12,7 +12,7 @@ def time_in_sec(time):
         for i in [0, 1, 2]:
             total_time[i] = int(total_time[i])
     except:
-        print colored('The Input wasnt Valid!','red')
+        print(colored('The Input wasnt Valid!', 'red'))
         quit()
 
     # convert time to seconds
@@ -34,27 +34,13 @@ def countdown(time, title):
 
     # formatting countdown output
     def countdown_time(time):
-        hours = time / (60 ** 2)
-        minutes = (time / 60) % 60
+        hours = time // (60 ** 2)
+        minutes = (time // 60) % 60
         seconds = time % 60
         return "%i H, %i Min and %i Sec" % (hours, minutes, seconds)
 
-    # function to quit pygame timer on key in event
-    # def quit_timer():
-    #     events = pygame.event.get()
-    #     for event in events:
-    #         if event.type == pygame.QUIT:
-    #             # pygame.quit()
-    #             print "Timer terminated."
-    #             quit()
-    #         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-    #             # pygame.quit()
-    #             print "Timer stopped"
-    #             quit()
-
     # running the Timer
     while total_time_in_seconds > 0:
-        # quit_timer()
         if total_time_in_seconds <= 30:
             timer_dsp.fill((255, 4.25 * total_time_in_seconds,
                             4.25 * total_time_in_seconds))
@@ -72,6 +58,3 @@ def countdown(time, title):
         total_time_in_seconds -= 1
 
     pygame.quit()
-
-
-# countdown("00:01:15", "Cycle 1")

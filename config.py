@@ -1,10 +1,12 @@
 from termcolor import colored
+
+
 # cycle time settings
 def set_time():
-    td = raw_input("Enter time for cycles as HH:MM:SS or [Enter] to use default: >")
+    td = input("Enter time for cycles as HH:MM:SS or [Enter] to use default: >")
     if td == '':
         td = "00:25:00"
-        print "Using default: " + td
+        print("Using default: " + td)
         return td
     else:
         task_duration = td.split(':')
@@ -13,17 +15,16 @@ def set_time():
                 task_duration[i] = int(task_duration[i])
             return td
         except:
-            print colored('The Input wasnt Valid!','red')
+            print(colored('The Input wasnt Valid!', 'red'))
             set_time()
-# set_time()
 
 
-# long break settings
+# short break settings
 def short_break_settings():
-    short_break = raw_input("Enter time for short break as HH:MM:SS or [Enter] to use default: >")
+    short_break = input("Enter time for short break as HH:MM:SS or [Enter] to use default: >")
     if short_break == '':
         short_break = "00:05:00"
-        print "Using default: " + short_break
+        print("Using default: " + short_break)
         return short_break
     else:
         sb = short_break.split(':')
@@ -32,16 +33,16 @@ def short_break_settings():
                 sb[i] = int(sb[i])
             return short_break
         except:
-            print colored('The Input wasnt Valid!','red')
+            print(colored('The Input wasnt Valid!', 'red'))
             short_break_settings()
 
 
 # long break settings
 def long_break_settings():
-    long_break = raw_input("Enter time for long break as HH:MM:SS or [Enter] to use default: >")
+    long_break = input("Enter time for long break as HH:MM:SS or [Enter] to use default: >")
     if long_break == '':
         long_break = "00:15:00"
-        print "Using default: " + long_break
+        print("Using default: " + long_break)
         return long_break
     else:
         lb = long_break.split(':')
@@ -50,17 +51,16 @@ def long_break_settings():
                 lb[i] = int(lb[i])
             return long_break
         except:
-            print colored('The Input wasnt Valid!','red')
+            print(colored('The Input wasnt Valid!', 'red'))
             long_break_settings()
 
 
 # sound setting
 def sound_settings():
-    # sound = True
-    n = raw_input("Enter 1 for Sound on or 0 for off or [Enter] to use default: >")
+    n = input("Enter 1 for Sound on or 0 for off or [Enter] to use default: >")
     if n == '':
         sound = True
-        print "Using default: " +str(sound)
+        print("Using default: " + str(sound))
         return sound
     else:
         if n == '0':
@@ -70,17 +70,17 @@ def sound_settings():
             sound = True
             return sound
         else:
-            print colored('The Input wasnt Valid!','red')
+            print(colored('The Input wasnt Valid!', 'red'))
             sound_settings()
         return sound
 
 
 # total task length
 def task_length_settings():
-    task_length = raw_input("Enter total time for task as HH:MM:SS or [Enter] to use default: >")
+    task_length = input("Enter total time for task as HH:MM:SS or [Enter] to use default: >")
     if task_length == '':
         task_length = "01:00:00"
-        print "Using default: " + task_length
+        print("Using default: " + task_length)
         return task_length
     else:
         tl = task_length.split(':')
@@ -89,6 +89,5 @@ def task_length_settings():
                 tl[i] = int(tl[i])
             return task_length
         except:
-            print colored('The Input wasnt Valid!','red')
+            print(colored('The Input wasnt Valid!', 'red'))
             task_length_settings()
-# task_length_settings()

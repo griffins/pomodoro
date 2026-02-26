@@ -34,10 +34,6 @@ from pyfiglet import Figlet, figlet_format
 import countdown_timer
 import pygame
 
-# creates database and cursor
-# conn = sqlite3.connect('pomodoro.db')
-# c = conn.cursor()
-
 
 def docopt_cmd(func):
     """
@@ -53,7 +49,7 @@ def docopt_cmd(func):
             # The DocoptExit is thrown when the args do not match.
             # We print a message to the user and the usage block.
 
-            print colored('Invalid Command!','red')
+            print(colored('Invalid Command!', 'red'))
             print(e)
             return
 
@@ -73,7 +69,7 @@ def docopt_cmd(func):
 
 class MyInteractive(cmd.Cmd):
     f = Figlet(font='3d_diagonal')
-    print figlet_format("Tomato", font='3d_diagonal')
+    print(figlet_format("Tomato", font='3d_diagonal'))
     intro = 'Welcome to pomodoro timer!' \
             + ' (type help for a list of commands.)' + """
 Usage:
@@ -95,8 +91,7 @@ Options:
 
     def do_exit(self, arg):
         """Usage: exit"""
-        print colored('Good Bye!', 'red')
-        # print('Good Bye!')
+        print(colored('Good Bye!', 'red'))
         exit()
 
     @docopt_cmd
@@ -106,8 +101,7 @@ Options:
             new_task(arg['<task-title>'])
         except KeyboardInterrupt:
             pygame.quit()
-            print colored('\nTask complete', 'yellow')
-            # print "\n"
+            print(colored('\nTask complete', 'yellow'))
 
     @docopt_cmd
     def do_list(self, arg):
@@ -139,9 +133,6 @@ opt = docopt(__doc__, sys.argv[1:])
 
 if opt['--interactive']:
     try:
-        # print (__doc__)
         MyInteractive().cmdloop()
     except KeyboardInterrupt:
-        print "\n"
-
-# print(opt)
+        print("\n")
