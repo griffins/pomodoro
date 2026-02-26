@@ -1,0 +1,28 @@
+# Version control
+.git
+.github
+.gitignore
+
+# Python cache and compiled files
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+
+# Runtime database (created fresh in the container)
+*.db
+
+# Documentation
+README.md
+CONTRIBUTING.md
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# IDE/editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
