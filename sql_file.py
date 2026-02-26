@@ -21,7 +21,6 @@ def create_table():
         ''')
     conn.commit()
     c.close()
-# create_table()
 
 
 # function to input data to table
@@ -49,7 +48,7 @@ def list_day(time_stamp):
     c = conn.cursor()
     c.execute("SELECT * FROM Pomodoro WHERE timestamp = ?;", (time_stamp,))
     data = c.fetchall()
-    print colored('Tasks for: ' + time_stamp, 'yellow')
+    print(colored('Tasks for: ' + time_stamp, 'yellow'))
     t = table(['Task id', 'Taskname', 'Date', 'Total time', 'Cycles'])
     for row in data:
         id = str(row[0])
@@ -58,10 +57,9 @@ def list_day(time_stamp):
         time = str(row[3])
         cycle = str(row[4])
         t.add_row([id, name, date, time, cycle])
-    print t
+    print(t)
 
     c.close()
-# list_day("2016:11:09")
 
 
 # function to select all tasks
@@ -70,7 +68,7 @@ def list_all():
     c = conn.cursor()
     c.execute("""SELECT * FROM Pomodoro""")
     data = c.fetchall()
-    print colored('All Tasks','yellow')
+    print(colored('All Tasks', 'yellow'))
     t = table(['Task id', 'Taskname', 'Date', 'Total time', 'Cycles'])
     for row in data:
         id = str(row[0])
@@ -79,9 +77,7 @@ def list_all():
         time = str(row[3])
         cycle = str(row[4])
         t.add_row([id, name, date, time, cycle])
-        # print str(row[0]) + str(row[1]) + str(row[2]) + str(row[3])
-    print t
-# list_all()
+    print(t)
 
 
 # config short break in db
@@ -91,10 +87,9 @@ def short_break_db():
     y = config.short_break_settings()
     conn = sqlite3.connect('pomodoro.db')
     c = conn.cursor()
-    c.execute("UPDATE Pomodoro SET shortb = '%s' WHERE id='%s'" % (y, x))
+    c.execute("UPDATE Pomodoro SET shortb = ? WHERE id = ?", (y, x))
     conn.commit()
     c.close()
-# short_break_db()
 
 
 # config long break in db
@@ -104,7 +99,7 @@ def long_break_db():
     y = config.long_break_settings()
     conn = sqlite3.connect('pomodoro.db')
     c = conn.cursor()
-    c.execute("UPDATE Pomodoro SET longb = '%s' WHERE id='%s'" % (y, x))
+    c.execute("UPDATE Pomodoro SET longb = ? WHERE id = ?", (y, x))
     conn.commit()
     c.close()
 
@@ -116,9 +111,6 @@ def sound_db():
     y = config.sound_settings()
     conn = sqlite3.connect('pomodoro.db')
     c = conn.cursor()
-    c.execute("UPDATE Pomodoro SET sound = '%s' WHERE id='%s'" % (y, x))
+    c.execute("UPDATE Pomodoro SET sound = ? WHERE id = ?", (y, x))
     conn.commit()
     c.close()
-
-# list_all()
-# create_table()
