@@ -1,0 +1,32 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: /
+  schedule:
+    interval: weekly
+  ignore:
+  - dependency-name: '*'
+    update-types:
+    - version-update:semver-major
+  groups:
+    minor-and-patch:
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: docker
+  directory: /
+  schedule:
+    interval: weekly
+  ignore:
+  - dependency-name: '*'
+    update-types:
+    - version-update:semver-major
+  groups:
+    minor-and-patch:
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
