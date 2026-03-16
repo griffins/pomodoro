@@ -1,0 +1,12 @@
+[project]
+name = "pomodoro-timer"
+description = "A timer to schedule tasks and breaks into configurable cycles."
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "docopt==0.6.2",
+    "prettytable==0.7.2",
+    "pyfiglet==0.7.5",
+    "pygame>=2.6.1",
+    "termcolor==1.1.0",
+]
