@@ -3,3 +3,17 @@ __pycache__/
 *.pyo
 *.db
 .pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.tox/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# macOS metadata
+.DS_Store
